@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  
+  before_action :require_user_logged_in, only: [:index, :show]
+  #これで親クラスで設定したメソッドを呼び起こすことができる
   def index
      @users = User.all.page(params[:page])
      #全てのユーザーの情報を取得する
@@ -7,6 +10,8 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     #findでユーザーを指定する
+    @microposts = @user.microposts.order('created_at DESC').page(params[:page])
+    counts(@user)
   end
 
   def new
