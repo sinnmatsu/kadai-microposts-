@@ -1,0 +1,13 @@
+ <% if current_user.favoing?(micropost) %>
+ <!--favoしてたらtrue、unfavoだとfalseを返している-->
+   <%= form_for(current_user.favos.find_by(micropost_id: micropost.id), html: { method: :delete ,style: 'display: inline;' }) do |f| %>
+     <%= hidden_field_tag :micropost_id, micropost.id %>
+     <%= f.submit 'favo', :type =>  :image,:src => "/assets/likes@3x.png", :style =>'width:30px;' %>
+   <% end %>
+ <% else %>
+   <%= form_for(current_user.favos.build, html: { style: 'display: inline;' }) do |f| %>
+     <%= hidden_field_tag :micropost_id, micropost.id %>
+     <%= f.submit 'unfavo', :type =>  :image,:src => "/assets/like@3x.png", :style =>'width:30px;' %>
+   <% end %>
+ <% end %>
+ 

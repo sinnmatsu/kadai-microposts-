@@ -42,6 +42,14 @@ class UsersController < ApplicationController
     @followers = @user.followers.page(params[:page])
     counts(@user)
   end
+  
+  def likes
+    #likesのURLにアクセスしてきたときの反応
+    @user=User.find(params[:id])
+    @microposts=@user.likes.page(params[:page])
+    counts(@user)
+    #代入するユーザーのフォロー数などがわかるメソッドを用意する
+  end
 
 
   private

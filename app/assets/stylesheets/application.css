@@ -13,3 +13,14 @@
  *= require_tree .
  *= require_self
  */
+input[value="Follow"]{
+  display: inline;
+}
+
+input[value="favo"]{
+  display: inline;
+}
+
+a[value="Delete"]{
+  display: inline;
+}

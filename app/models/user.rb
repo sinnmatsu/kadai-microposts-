@@ -18,6 +18,28 @@ class User < ApplicationRecord
   has_many :followers, through: :reverses_of_relationship, source: :user
   #sourceで取得するカラムを指定する
   
+  has_many :favos
+  has_many :likes, through: :favos, source: :micropost
+  has_many :reverses_of_favos, class_name: 'Favo',foreign_key: 'micropost_id'
+  has_many :favouser, through: :reverses_of_relationship, source: :user
+  #互いに１対多の関係でモデルを参照し合う
+  
+  def favo(favo_micropost)
+    self.favos.find_or_create_by(micropost_id: favo_micropost.id)
+    #micropostのidを挿入する
+  end
+  
+  def unfavo(favo_micropost)
+    favoo = self.favos.find_by(micropost_id: favo_micropost.id)
+    favoo.destroy if favoo
+    #unfavoメソッドが発動してfavooがnilでなかったら消去する
+  end
+  #rubyはselfを省略できるので
+  
+  def favoing?(favo_micropost)
+    self.likes.include?(favo_micropost)
+    #micropostが入っているかどうか
+  end
   
   def follow(other_user)
     unless self == other_user
@@ -32,6 +54,11 @@ class User < ApplicationRecord
   
   def following?(other_user)
     self.followings.include?(other_user)
+  end
+  
+  def feed_microposts
+   Micropost.where(user_id: self.following_ids + [self.id])
+   #自分がフォローしているユーザーidと自分のidが条件
   end
   
 end

@@ -1,0 +1,12 @@
+<% if @microposts.any? %>
+  <ul class="media-list">
+     <% @microposts.each do |micropost| %>
+       <li class="media">
+         <div class="media-body">
+           <%= render 'microposts/microposts', microposts: @microposts %>
+         </div>
+       </li>
+     <% end %>
+  </ul>
+  <%= paginate @microposts %>
+<% end %>

@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190117035527) do
+ActiveRecord::Schema.define(version: 20190119031528) do
+
+  create_table "favos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.integer  "micropost_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["micropost_id"], name: "index_favos_on_micropost_id", using: :btree
+    t.index ["user_id"], name: "index_favos_on_user_id", using: :btree
+  end
 
   create_table "microposts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "content"
@@ -37,6 +46,8 @@ ActiveRecord::Schema.define(version: 20190117035527) do
     t.datetime "updated_at",      null: false
   end
 
+  add_foreign_key "favos", "microposts"
+  add_foreign_key "favos", "users"
   add_foreign_key "microposts", "users"
   add_foreign_key "relationships", "users"
   add_foreign_key "relationships", "users", column: "follow_id"

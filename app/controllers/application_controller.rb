@@ -14,7 +14,11 @@ class ApplicationController < ActionController::Base
   end
   
   def counts(user)
+    # userは引数なのであとでそこに@userが代入される
     @count_microposts = user.microposts.count
+    @count_followings = user.followings.count
+    @count_followers = user.followers.count
+    @count_likes = user.likes.count
   end
   
 end
