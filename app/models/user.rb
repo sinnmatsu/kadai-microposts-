@@ -18,8 +18,8 @@ class User < ApplicationRecord
   has_many :followers, through: :reverses_of_relationship, source: :user
   #sourceで取得するカラムを指定する
   
-  has_many :favos
-  has_many :likes, through: :favos, source: :micropost
+  has_many :favos 
+  has_many :likes, through: :favos, source: :micropost 
   has_many :reverses_of_favos, class_name: 'Favo',foreign_key: 'micropost_id'
   has_many :favouser, through: :reverses_of_relationship, source: :user
   #互いに１対多の関係でモデルを参照し合う
